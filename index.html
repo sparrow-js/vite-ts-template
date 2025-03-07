@@ -8,13 +8,32 @@
     <meta name="author" content="genfly" />
     <meta property="og:image" content="/og-image.png" />
     <script>
+    
+    
+    </script>
+    <script>
+      // 错误处理
       window.addEventListener('error', (event) => {
           window.parent.postMessage({
             message: event.message,
             error: event.error
           }, '*')
-      })
+      });
+
+      console.error = new Proxy(console.error, {
+        apply: function(target, thisArg, args) {
+          // 添加监听逻辑
+          console.log('捕获到错误:', args);
+          window.parent.postMessage({
+            message: args,
+            error: args
+          }, '*')
+          return target.apply(thisArg, args);
+        }
+      });
+      
     </script>  
+
   </head>
 
   <body>
