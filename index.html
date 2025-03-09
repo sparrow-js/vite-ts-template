@@ -12,7 +12,6 @@
     
     </script>
     <script>
-      // 错误处理
       window.addEventListener('error', (event) => {
           window.parent.postMessage({
             message: event.message,
@@ -22,8 +21,7 @@
 
       console.error = new Proxy(console.error, {
         apply: function(target, thisArg, args) {
-          // 添加监听逻辑
-          console.log('捕获到错误:', args);
+          console.error('proxy error:', args);
           window.parent.postMessage({
             message: args,
             error: args
