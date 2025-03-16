@@ -8,10 +8,6 @@
     <meta name="author" content="genfly" />
     <meta property="og:image" content="/og-image.png" />
     <script>
-    
-    
-    </script>
-    <script>
       window.addEventListener('error', (event) => {
           window.parent.postMessage({
             message: event.message,
@@ -21,7 +17,6 @@
 
       console.error = new Proxy(console.error, {
         apply: function(target, thisArg, args) {
-          console.error('proxy error:', args);
           window.parent.postMessage({
             message: args,
             error: args
